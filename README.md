@@ -6,9 +6,9 @@ PingScope uses the Windows `ping` utility and Python's standard library. It does
 
 ## Run
 
-1. Install Python 3.10 or newer from [python.org](https://www.python.org/downloads/windows/) and enable **Add Python to PATH**.
+1. Install Python 3.10 or newer from [python.org](https://www.python.org/downloads/windows/) and enable the Python launcher or **Add Python to PATH**.
 2. Download this repository and extract it.
-3. Double-click `run.bat` (or run `py ping_scope.py` in this folder).
+3. Double-click `run.bat` (or run `py -3 ping_scope.py`; if the launcher is unavailable, use `python ping_scope.py`).
 
 No packages need to be installed. Windows Firewall or the target host may block ICMP echo requests; in that case the application records packet loss, which does not necessarily mean the game server itself is unreachable.
 
