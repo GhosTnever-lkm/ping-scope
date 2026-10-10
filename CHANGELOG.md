@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.1 — 2026-10-10
+
+- Updated GitHub Actions to the current Node 24-compatible major versions.
+- Kept standalone Windows x64 and source archives reproducible with SHA-256 checksums.
+
 ## 0.2.0 — 2026-10-10
 
 - Added a standalone one-file Windows x64 build that runs without a separate Python installation.
