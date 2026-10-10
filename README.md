@@ -30,6 +30,7 @@ PingScope measures ICMP round-trip time from this computer. It cannot measure ga
 
 ```powershell
 py ping_scope.py
+python -m unittest discover -s tests -v
 ```
 
 The interface and measurements are local. CSV export happens only when you explicitly choose a destination.
@@ -37,3 +38,17 @@ The interface and measurements are local. CSV export happens only when you expli
 ## License
 
 MIT. See [LICENSE](LICENSE).
+
+## Flow
+
+```mermaid
+flowchart LR
+    A[Chosen host] --> B[Windows ping]
+    B --> C[Local measurements]
+    C --> D[Live latency chart]
+    C --> E[CSV session report]
+```
+
+## ☕ Support / Pro Version
+
+PingScope is currently free and open source under MIT; there is no separate Pro build or paid feature set. If you find it useful, support the developer on [Boosty](https://boosty.to/azizazimov) or [Buy Me a Coffee](https://buymeacoffee.com/azizazimov8). Support does not unlock additional functionality.
