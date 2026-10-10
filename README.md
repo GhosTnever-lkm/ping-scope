@@ -6,6 +6,12 @@ PingScope uses the Windows `ping` utility and Python's standard library. It does
 
 ## Run
 
+### Ready-to-run build
+
+Download `PingScope-v0.2.0-windows-x64.zip` from [Releases](https://github.com/GhosTnever-lkm/ping-scope/releases/latest), extract it, and double-click `PingScope.exe`. Python does not need to be installed. The first launch can take a few seconds while Windows starts the bundled files.
+
+### Run from source
+
 1. Install Python 3.10 or newer from [python.org](https://www.python.org/downloads/windows/) and enable the Python launcher or **Add Python to PATH**.
 2. Download this repository and extract it.
 3. Double-click `run.bat` (or run `py -3 ping_scope.py`; if the launcher is unavailable, use `python ping_scope.py`).

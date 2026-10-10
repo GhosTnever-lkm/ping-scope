@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.0 — 2026-10-10
+
+- Added a standalone one-file Windows x64 build that runs without a separate Python installation.
+- Added reproducible, version-pinned PyInstaller packaging to the release workflow, with SHA-256 checksums for both app and source archives.
+- Suppressed the child console window when the packaged app runs Windows ping.
+- Added regression coverage for captured ping output and no-console launch.
+
 ## 0.1.0 — 2026-10-10
 
 - First public source release of PingScope.

@@ -68,8 +68,9 @@ def ping_once(target: str, timeout_ms: int) -> float | None:
         pass
     args.append(target)
     try:
-        result = subprocess.run(args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
-                                timeout=timeout_ms / 1000 + 2, check=False)
+        result = subprocess.run(args, stdin=subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                                timeout=timeout_ms / 1000 + 2, check=False,
+                                creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
     except (OSError, subprocess.TimeoutExpired):
         return None
     for encoding in ("cp866", "cp1251", "utf-8"):

@@ -2,6 +2,7 @@ import sys
 import unittest
 from datetime import datetime
 from pathlib import Path
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -27,6 +28,13 @@ class PingParsingTests(unittest.TestCase):
 
     def test_timeout_is_a_lost_packet(self):
         self.assertIsNone(ping_scope.parse_ping_latency("Request timed out."))
+
+    @patch("ping_scope.subprocess.run")
+    def test_ping_captures_output_without_opening_console(self, run):
+        run.return_value.stdout = b"Reply from 127.0.0.1: time=4ms"
+        self.assertEqual(ping_scope.ping_once("127.0.0.1", 1200), 4.0)
+        self.assertEqual(run.call_args.kwargs["creationflags"], getattr(ping_scope.subprocess, "CREATE_NO_WINDOW", 0))
+        self.assertEqual(run.call_args.kwargs["stdin"], ping_scope.subprocess.DEVNULL)
 
 
 class SummaryTests(unittest.TestCase):
