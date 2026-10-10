@@ -56,7 +56,7 @@ def parse_ping_latency(output: str) -> float | None:
     if not match:
         return None
     value = float(match.group(2).replace(",", "."))
-    return max(0.5, value) if match.group(1) == "<" else value
+    return min(0.5, value) if match.group(1) == "<" else value
 
 
 def ping_once(target: str, timeout_ms: int) -> float | None:
