@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.2 - 2026-10-11
+
+- Complete the standard MIT license text, restoring the full warranty and liability disclaimer.
+
 ## 0.2.1 — 2026-10-10
 
 - Updated GitHub Actions to the current Node 24-compatible major versions.
