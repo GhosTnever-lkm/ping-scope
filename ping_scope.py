@@ -18,7 +18,7 @@ from datetime import datetime
 from tkinter import filedialog, messagebox, ttk
 
 
-APP_VERSION = "0.1.0"
+APP_VERSION = "0.2.3"
 MAX_SAMPLES = 10_000
 TIME_RE = re.compile(r"(?:time|время)\s*([=<])\s*(\d+(?:[.,]\d+)?)\s*(?:ms|мс)?", re.I)
 DOMAIN_RE = re.compile(r"(?=.{1,253}$)(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)(?:\.(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?))*\.?$")
