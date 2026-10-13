@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.3 - 2026-10-13
+
+- Correct the application window's displayed version to match the release metadata.
+
 ## 0.2.2 - 2026-10-11
 
 - Complete the standard MIT license text, restoring the full warranty and liability disclaimer.
