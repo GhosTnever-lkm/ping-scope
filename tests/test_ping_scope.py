@@ -2,7 +2,7 @@ import sys
 import unittest
 from datetime import datetime
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -50,6 +50,60 @@ class SummaryTests(unittest.TestCase):
         self.assertAlmostEqual(result["loss_pct"], 100 / 3)
         self.assertEqual(result["jitter_ms"], 4.0)
         self.assertEqual(result["median_ms"], 12.0)
+
+
+class SessionStartTests(unittest.TestCase):
+    def _app_with_prior_sample(self):
+        app = ping_scope.PingScope.__new__(ping_scope.PingScope)
+        app.running = False
+        app.samples = [ping_scope.Sample(1, datetime.now(), 12.0)]
+        app.session_target = "old.example"
+        app.target_var = Mock(get=Mock(return_value="new.example"))
+        app.interval_var = Mock(get=Mock(return_value="1.0"))
+        app.timeout_var = Mock(get=Mock(return_value="1200"))
+        app.stop_event = Mock()
+        app.status_var = Mock()
+        app.start_button = Mock()
+        app.stop_button = Mock()
+        app.target_entry = Mock()
+        app.reset = Mock(side_effect=app.samples.clear)
+        return app
+
+    def test_declining_new_session_preserves_results_and_does_not_start_worker(self):
+        app = self._app_with_prior_sample()
+        with patch("ping_scope.messagebox.askyesno", return_value=False), \
+             patch("ping_scope.threading.Thread") as thread:
+            app.start()
+        self.assertEqual(len(app.samples), 1)
+        self.assertEqual(app.session_target, "old.example")
+        thread.assert_not_called()
+
+    def test_invalid_new_target_does_not_prompt_or_clear_previous_results(self):
+        app = self._app_with_prior_sample()
+        app.target_var.get.return_value = "-invalid"
+        with patch("ping_scope.messagebox.showerror"), \
+             patch("ping_scope.messagebox.askyesno") as ask, \
+             patch("ping_scope.threading.Thread") as thread:
+            app.start()
+        self.assertEqual(len(app.samples), 1)
+        app.reset.assert_not_called()
+        ask.assert_not_called()
+        thread.assert_not_called()
+
+    def test_confirming_new_session_clears_old_target_before_starting(self):
+        app = self._app_with_prior_sample()
+        with patch("ping_scope.messagebox.askyesno", return_value=True), \
+             patch("ping_scope.threading.Thread") as thread:
+            app.start()
+        app.reset.assert_called_once_with()
+        self.assertEqual(app.samples, [])
+        self.assertEqual(app.session_target, "new.example")
+        thread.return_value.start.assert_called_once_with()
+
+
+class ReleaseMetadataTests(unittest.TestCase):
+    def test_app_version_matches_version_file(self):
+        self.assertEqual(ping_scope.APP_VERSION, (ROOT / "VERSION").read_text(encoding="utf-8").strip())
 
 
 if __name__ == "__main__":

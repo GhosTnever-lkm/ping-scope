@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.4 - 2026-10-24
+
+- Ask before clearing completed measurements when starting a new session, preventing results from different hosts or settings from being mixed in the chart and CSV summary.
+- Keep the displayed app version synchronized with the release version file.
+
 ## 0.2.3 - 2026-10-13
 
 - Correct the application window's displayed version to match the release metadata.

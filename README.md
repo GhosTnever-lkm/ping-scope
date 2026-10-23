@@ -25,6 +25,7 @@ No packages need to be installed. Windows Firewall or the target host may block 
 - **Packet loss** is the fraction of unanswered ICMP probes in this session.
 - **Chart** shows up to the latest 200 probes. A cross marks a probe with no recognized reply.
 - **CSV export** includes each probe's local timestamp and outcome plus a compact session summary.
+- Starting another measurement after a session has samples asks before clearing the earlier results, so measurements from different hosts or settings are not silently combined. Export the previous session first if you want to keep it.
 
 Use a host relevant to your route. A public DNS address is only a convenient connectivity example, not a proxy for any particular game's server.
 
