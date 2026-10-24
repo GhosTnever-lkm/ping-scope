@@ -18,7 +18,7 @@ from datetime import datetime
 from tkinter import filedialog, messagebox, ttk
 
 
-APP_VERSION = "0.2.3"
+APP_VERSION = "0.2.4"
 MAX_SAMPLES = 10_000
 TIME_RE = re.compile(r"(?:time|время)\s*([=<])\s*(\d+(?:[.,]\d+)?)\s*(?:ms|мс)?", re.I)
 DOMAIN_RE = re.compile(r"(?=.{1,253}$)(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)(?:\.(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?))*\.?$")
@@ -217,6 +217,15 @@ class PingScope(tk.Tk):
         except ValueError as exc:
             messagebox.showerror("Проверьте параметры", str(exc), parent=self)
             return
+        if self.samples and not messagebox.askyesno(
+            "Начать новый сеанс?",
+            f"Есть {len(self.samples)} замеров предыдущего сеанса. Новый сеанс очистит их. "
+            "Перед продолжением нажмите «Экспорт CSV…», если хотите сохранить результаты.",
+            parent=self,
+        ):
+            return
+        if self.samples:
+            self.reset()
         self.session_target = target
         self.stop_event.clear()
         self.running = True
