@@ -105,6 +105,11 @@ class ReleaseMetadataTests(unittest.TestCase):
     def test_app_version_matches_version_file(self):
         self.assertEqual(ping_scope.APP_VERSION, (ROOT / "VERSION").read_text(encoding="utf-8").strip())
 
+    def test_readme_download_name_matches_current_release_version(self):
+        version = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+        self.assertIn(f"PingScope-v{version}-windows-x64.zip", readme)
+
 
 if __name__ == "__main__":
     unittest.main()
